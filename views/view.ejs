@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Details</title>
+</head>
+<body>
+    <h1>All Users</h1>
+    <a href="/view?page=<%= page-1 %>">prev</a>
+    <p><%= page %></p>
+    <a href="/view?page=<%= page+1 %>">next</a>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Full Name</th>
+            <th>Email</th>
+            <th>Salary</th>
+            <th>Job Title</th>
+        </tr>
+        <% users.forEach(user => { %>
+            <tr>
+                <td><%= user.user_id %></td>
+                <td><%= user.full_name %></td>
+                <td><%= user.email %></td>
+                <td><%= JSON.parse(JSON.stringify(user.info)).salary %></td>
+                <td><%= JSON.parse(JSON.stringify(user.info)).job_title %></td>
+            </tr>
+        <% }); %>
+    </table>
+</body>
+</html>

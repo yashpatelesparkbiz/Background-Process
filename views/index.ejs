@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Background Process</title>
+  </head>
+  <body>
+    <button onclick="generateData()">Generate Data</button><br /><br />
+    <button onclick="insertData()">Insert Data</button>
+
+    <span
+      id="loading"
+      style="display: none; align-items: center; justify-content: center"
+      >Loading...</span
+    >
+
+    <script>
+      async function generateData() {
+        loading("start");
+        const res = await fetch("/generate", {
+          method: "get",
+        });
+        const data = await res.json();
+        loading("stop");
+        if (res.ok) {
+          alert(data.message);
+        } else {
+          alert("Data Generation Failed");
+        }
+      }
+
+      async function insertData() {
+        loading("start");
+        document.querySelector("body").style.pointerEvents = "none";
+        const res = await fetch("/insert", {
+          method: "post",
+        });
+        const data = await res.json();
+        loading("stop");
+        document.querySelector("body").style.pointerEvents = "auto";
+        alert(data.message);
+      }
+
+      function loading(str) {
+        if (str === "start") {
+          document.getElementById("loading").style.display = "flex";
+        } else {
+          document.getElementById("loading").style.display = "none";
+        }
+      }
+    </script>
+  </body>
+</html>
