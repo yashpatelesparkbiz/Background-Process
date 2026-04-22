@@ -80,11 +80,18 @@ app.get("/view", async (req: Request, res: Response) => {
   const offset: number = (page - 1) * RECORDS_PER_PAGE;
 
   try {
+    const [[total]] = await pool.execute<RowDataPacket[]>(
+      "select count(user_id) as total from users",
+    );
     const [users] = await pool.execute<RowDataPacket[]>(
       `select * from users limit ${offset}, ${RECORDS_PER_PAGE}`,
     );
 
-    res.render("view", { users: users as IUser[], page });
+    res.render("view", {
+      users: users as IUser[],
+      page,
+      totalPages: Math.ceil(total?.total / RECORDS_PER_PAGE),
+    });
   } catch (error) {
     console.error(error);
   }
