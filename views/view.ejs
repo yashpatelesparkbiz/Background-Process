@@ -7,9 +7,11 @@
 </head>
 <body>
     <h1>All Users</h1>
+    <a href="/view?page=1">start</a>
     <a href="/view?page=<%= page-1 %>">prev</a>
-    <p><%= page %></p>
+    <span><%= page %></span>
     <a href="/view?page=<%= page+1 %>">next</a>
+    <a href="/view?page=<%= totalPages %>">end</a>
     <table border="1">
         <tr>
             <th>ID</th>
